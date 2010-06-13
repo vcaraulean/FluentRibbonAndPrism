@@ -1,7 +1,9 @@
 using System;
 using System.Windows;
+using Fluent;
 using FluentRibbonAndPrism.Infrastructure;
 using Microsoft.Practices.Composite.Modularity;
+using Microsoft.Practices.Composite.Presentation.Regions;
 
 namespace FluentRibbonAndPrism
 {
@@ -26,6 +28,15 @@ namespace FluentRibbonAndPrism
 		{
 			base.BeforeShellCreated();
 			Container.AddComponent<MainWindowViewModel>();
+		}
+
+		protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+		{
+			var mappings = base.ConfigureRegionAdapterMappings();
+			Container.AddComponent<FluentRibbonRegionAdapter>();
+			mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<FluentRibbonRegionAdapter>());
+			return mappings;
+
 		}
 	}
 }

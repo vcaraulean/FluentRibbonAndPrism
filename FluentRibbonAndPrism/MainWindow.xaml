@@ -1,7 +1,6 @@
 ﻿<Fluent:RibbonWindow x:Class="FluentRibbonAndPrism.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent" 
-					 Title="Fluent Ribbon and Prism V2.2 demo. Castle Windsor starring as IoC container." 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent" xmlns:Regions="clr-namespace:Microsoft.Practices.Composite.Presentation.Regions;assembly=Microsoft.Practices.Composite.Presentation" Title="Fluent Ribbon and Prism V2.2 demo. Castle Windsor starring as IoC container." 
 					 Height="600" Width="800"
 					 >
 	<Grid>
@@ -9,7 +8,9 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Fluent:Ribbon >
+		<Fluent:Ribbon 
+			Regions:RegionManager.RegionName="theRibbon"
+			>
 			<Fluent:Ribbon.BackstageItems>
 				<Fluent:Button Text="New..." />
 				<Fluent:Button Text="Save..." />

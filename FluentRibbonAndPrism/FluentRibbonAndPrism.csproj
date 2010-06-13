@@ -84,9 +84,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="FirstRibbonTab.xaml.cs">
+      <DependentUpon>FirstRibbonTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\FluentRibbonRegionAdapter.cs" />
     <Compile Include="Infrastructure\Log4NetLogger.cs" />
     <Compile Include="Infrastructure\WindsorBootstrapper.cs" />
     <Compile Include="Infrastructure\WindsorServiceLocator.cs" />
+    <Page Include="FirstRibbonTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
