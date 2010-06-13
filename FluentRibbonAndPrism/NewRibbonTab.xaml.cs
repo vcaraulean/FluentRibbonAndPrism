@@ -18,9 +18,9 @@ namespace FluentRibbonAndPrism
 	/// <summary>
 	/// Interaction logic for FirstRibbonTab.xaml
 	/// </summary>
-	public partial class FirstRibbonTab : RibbonTabItem
+	public partial class NewRibbonTab : RibbonTabItem
 	{
-		public FirstRibbonTab()
+		public NewRibbonTab()
 		{
 			InitializeComponent();
 		}

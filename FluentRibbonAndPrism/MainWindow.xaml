@@ -20,10 +20,13 @@
 		</Fluent:Ribbon>
 		<Grid Grid.Row="1">
 			<Button Margin="18,18,0,0" HorizontalAlignment="Left" Width="147" Height="32" VerticalAlignment="Top"
-					Content="Add new Tab via Prism"
+					Content="Add New Tab"
 					Command="{Binding CreateNewTabCommand}"
 					>
 			</Button>
+			<Button Command="{Binding RemoveActiveTabCommand}" Content="Remove Active Tab" Height="32" HorizontalAlignment="Left" Margin="18,70,0,0" VerticalAlignment="Top" Width="147" />
+			<Button Command="{Binding DeactivateActiveTabCommand}" Content="Deactivate Active Tab" Height="32" HorizontalAlignment="Left" Margin="183,70,0,0" VerticalAlignment="Top" Width="147" />
+			<Button Command="{Binding CreateAndActivateNewTabCommand}" Content="Add New Tab and Activate" Height="32" HorizontalAlignment="Left" Margin="183,18,0,0" VerticalAlignment="Top" Width="147" />
 		</Grid>
 	</Grid>
 </Fluent:RibbonWindow>

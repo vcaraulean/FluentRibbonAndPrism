@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using Fluent;
 using FluentRibbonAndPrism.Infrastructure;
@@ -27,16 +26,16 @@ namespace FluentRibbonAndPrism
 		protected override void BeforeShellCreated()
 		{
 			base.BeforeShellCreated();
+
 			Container.AddComponent<MainWindowViewModel>();
 		}
 
 		protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
 		{
 			var mappings = base.ConfigureRegionAdapterMappings();
-			Container.AddComponent<FluentRibbonRegionAdapter>();
-			mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<FluentRibbonRegionAdapter>());
+			Container.AddComponent<RibbonRegionAdapter>();
+			mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
 			return mappings;
-
 		}
 	}
 }
