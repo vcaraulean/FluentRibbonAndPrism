@@ -1,6 +1,6 @@
 using System;
 using System.Windows;
-using FluentRibbonAndPrism.PrismIntegration;
+using FluentRibbonAndPrism.Infrastructure;
 using Microsoft.Practices.Composite.Modularity;
 
 namespace FluentRibbonAndPrism
@@ -9,7 +9,10 @@ namespace FluentRibbonAndPrism
 	{
 		protected override DependencyObject CreateShell()
 		{
-			var mainWindow = new MainWindow();
+			var mainWindow = new MainWindow
+			{
+				DataContext = Container.Resolve<MainWindowViewModel>()
+			};
 			mainWindow.Show();
 			return mainWindow;
 		}
@@ -17,6 +20,12 @@ namespace FluentRibbonAndPrism
 		protected override IModuleCatalog GetModuleCatalog()
 		{
 			return new ModuleCatalog();
+		}
+
+		protected override void BeforeShellCreated()
+		{
+			base.BeforeShellCreated();
+			Container.AddComponent<MainWindowViewModel>();
 		}
 	}
 }

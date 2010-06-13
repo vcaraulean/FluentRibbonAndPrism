@@ -84,9 +84,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="PrismIntegration\Log4NetLogger.cs" />
-    <Compile Include="PrismIntegration\WindsorBootstrapper.cs" />
-    <Compile Include="PrismIntegration\WindsorServiceLocator.cs" />
+    <Compile Include="Infrastructure\Log4NetLogger.cs" />
+    <Compile Include="Infrastructure\WindsorBootstrapper.cs" />
+    <Compile Include="Infrastructure\WindsorServiceLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +101,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
