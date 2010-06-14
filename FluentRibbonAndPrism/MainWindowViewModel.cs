@@ -8,6 +8,7 @@ namespace FluentRibbonAndPrism
 	public class MainWindowViewModel
 	{
 		private readonly IRegionManager regionManager;
+		private IRegion ribbonRegion;
 
 		public MainWindowViewModel(IRegionManager regionManager)
 		{
@@ -19,21 +20,10 @@ namespace FluentRibbonAndPrism
 			DeactivateActiveTabCommand = new DelegateCommand<object>(DeactivateActiveTab, CanDeactivateActiveTab);
 		}
 
-		private IRegion RibbonRegion
-		{
-			get
-			{
-				if (regionManager.Regions.ContainsRegionWithName("theRibbon"))
-					return regionManager.Regions["theRibbon"];
-
-				return null;
-			}
-		}
-
 		private void DeactivateActiveTab(object obj)
 		{
-			var activeTab = RibbonRegion.ActiveViews.First();
-			RibbonRegion.Deactivate(activeTab);
+			var activeTab = ribbonRegion.ActiveViews.First();
+			ribbonRegion.Deactivate(activeTab);
 		}
 
 		private bool CanDeactivateActiveTab(object arg)
@@ -43,8 +33,8 @@ namespace FluentRibbonAndPrism
 
 		private void RemoveActiveTab(object obj)
 		{
-			var activeView = RibbonRegion.ActiveViews.First();
-			RibbonRegion.Remove(activeView);
+			var activeView = ribbonRegion.ActiveViews.First();
+			ribbonRegion.Remove(activeView);
 		}
 
 		private bool CanRemoveActiveTab(object arg)
@@ -54,20 +44,20 @@ namespace FluentRibbonAndPrism
 
 		private bool RegionHasActiveViews()
 		{
-			if (RibbonRegion == null)
+			if (ribbonRegion == null)
 				return false;
-			return RibbonRegion.ActiveViews.Count() > 0;
+			return ribbonRegion.ActiveViews.Count() > 0;
 		}
 
 		private void CreateNewTab(object obj)
 		{
-			RibbonRegion.Add(CreateNewTab());
+			ribbonRegion.Add(CreateNewTab());
 		}
 
 		private NewRibbonTab CreateNewTab()
 		{
 			var newTab = new NewRibbonTab();
-			var tabCount = RibbonRegion.Views.Count() + 1;
+			var tabCount = ribbonRegion.Views.Count() + 1;
 			newTab.Header += "Nr. " + tabCount;
 			return newTab;
 		}
@@ -75,8 +65,8 @@ namespace FluentRibbonAndPrism
 		private void CreateAndActivateNewTab(object obj)
 		{
 			var ribbonTab = CreateNewTab();
-			RibbonRegion.Add(ribbonTab);
-			RibbonRegion.Activate(ribbonTab);
+			ribbonRegion.Add(ribbonTab);
+			ribbonRegion.Activate(ribbonTab);
 		}
 
 		public DelegateCommand<object> CreateNewTabCommand { get; set; }
@@ -86,7 +76,9 @@ namespace FluentRibbonAndPrism
 
 		public void AfterShellCreated()
 		{
-			RibbonRegion.ActiveViews.CollectionChanged += delegate
+			ribbonRegion = regionManager.Regions["theRibbon"];
+
+			ribbonRegion.ActiveViews.CollectionChanged += delegate
 			{
 				RemoveActiveTabCommand.RaiseCanExecuteChanged();
 				DeactivateActiveTabCommand.RaiseCanExecuteChanged();
