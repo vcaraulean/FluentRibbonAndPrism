@@ -10,12 +10,20 @@ namespace FluentRibbonAndPrism
 	{
 		protected override DependencyObject CreateShell()
 		{
-			var mainWindow = new MainWindow
-			{
-				DataContext = Container.Resolve<MainWindowViewModel>()
-			};
+			var mainWindow = new MainWindow();
+
 			mainWindow.Show();
+
+			mainWindow.DataContext = Container.Resolve<MainWindowViewModel>();
+			
 			return mainWindow;
+		}
+
+		protected override void AfterShellCreated()
+		{
+			base.AfterShellCreated();
+			var mainViewModel = Container.Resolve<MainWindowViewModel>();
+			mainViewModel.AfterShellCreated();
 		}
 
 		protected override IModuleCatalog GetModuleCatalog()

@@ -23,7 +23,7 @@ namespace FluentRibbonAndPrism.Infrastructure
 			hostControl.SelectedTabChanged += HostControlOnSelectedTabChanged;
 			Region.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
 			Region.Views.CollectionChanged += ViewsOnCollectionChanged;
-		}
+		}	
 
 		private void ViewsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
@@ -76,7 +76,7 @@ namespace FluentRibbonAndPrism.Infrastructure
 			{
 				var ribbon = value as Ribbon;
 				if (ribbon == null)
-					throw new InvalidOperationException("Host control is to be set to null!");
+					throw new InvalidOperationException("Host control should be a Fluent Ribbon control.");
 
 				hostControl = ribbon;
 			}

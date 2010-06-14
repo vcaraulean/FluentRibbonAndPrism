@@ -6,4 +6,9 @@
              d:DesignHeight="300" d:DesignWidth="300"
 					  Header="Ribbon Tab"
 					  >
+	<Fluent:RibbonGroupBox Header="New Ribbon Group">
+		<Fluent:Button Text="Op 1" />
+		<Fluent:Button Text="Op 2" />
+		<Fluent:Button Text="Op 3" />
+	</Fluent:RibbonGroupBox>
 </Fluent:RibbonTabItem>
