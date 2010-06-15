@@ -84,6 +84,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="GroupBox.xaml.cs">
+      <DependentUpon>GroupBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RibbonTabAsRegion.xaml.cs">
+      <DependentUpon>RibbonTabAsRegion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\TabItemRegionAdapter.cs" />
     <Compile Include="NewRibbonTab.xaml.cs">
       <DependentUpon>NewRibbonTab.xaml</DependentUpon>
@@ -93,6 +99,15 @@
     <Compile Include="Infrastructure\RibbonRegionSyncBehavior.cs" />
     <Compile Include="Infrastructure\WindsorBootstrapper.cs" />
     <Compile Include="Infrastructure\WindsorServiceLocator.cs" />
+    <Compile Include="RibbonTabAsRegionViewModel.cs" />
+    <Page Include="GroupBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RibbonTabAsRegion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="NewRibbonTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

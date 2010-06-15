@@ -22,6 +22,14 @@ namespace FluentRibbonAndPrism
 			RemoveActiveTabCommand = new DelegateCommand<object>(RemoveActiveTab, CanRemoveActiveTab);
 			DeactivateActiveTabCommand = new DelegateCommand<object>(DeactivateActiveTab, CanDeactivateActiveTab);
 			LoadModuleAndShowTabCommand = new DelegateCommand<object>(LoadModule);
+			DemoTabAsRegionCommand = new DelegateCommand<object>(DemoTabAsRegion);
+		}
+
+		private void DemoTabAsRegion(object obj)
+		{
+			var tabItem = new RibbonTabAsRegion();
+			ribbonRegion.Add(tabItem);
+			ribbonRegion.Activate(tabItem);
 		}
 
 		private void LoadModule(object obj)
@@ -83,6 +91,7 @@ namespace FluentRibbonAndPrism
 		public DelegateCommand<object> RemoveActiveTabCommand { get; set; }
 		public DelegateCommand<object> DeactivateActiveTabCommand { get; set; }
 		public DelegateCommand<object> LoadModuleAndShowTabCommand { get; set; }
+		public DelegateCommand<object> DemoTabAsRegionCommand { get; set; }
 
 		public void AfterShellCreated()
 		{

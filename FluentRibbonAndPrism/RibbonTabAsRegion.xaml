@@ -1,0 +1,15 @@
+﻿<Fluent:RibbonTabItem x:Class="FluentRibbonAndPrism.RibbonTabAsRegion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent" xmlns:Regions="clr-namespace:Microsoft.Practices.Composite.Presentation.Regions;assembly=Microsoft.Practices.Composite.Presentation" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+					  Header="This Ribbon Tab is hosting a Region"
+					  Regions:RegionManager.RegionName="TabRegion"
+					  >
+	<Fluent:RibbonGroupBox Header="This group is created statically">
+		<Fluent:Button Text="Click to Add new Group via Prism" 
+					   Command="{Binding ShowGroupBoxInRegionCommand}"
+					   />
+	</Fluent:RibbonGroupBox>
+</Fluent:RibbonTabItem>

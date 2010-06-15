@@ -26,6 +26,7 @@ namespace FluentRibbonAndPrism.Infrastructure
 					{
 						regionTarget.Groups.Add((RibbonGroupBox) newItem);
 					}
+					regionTarget.BringIntoView();
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					foreach (var oldItem in e.OldItems)
