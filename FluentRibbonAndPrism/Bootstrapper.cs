@@ -42,7 +42,10 @@ namespace FluentRibbonAndPrism
 		{
 			var mappings = base.ConfigureRegionAdapterMappings();
 			Container.AddComponent<RibbonRegionAdapter>();
+			Container.AddComponent<TabItemRegionAdapter>();
+
 			mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
+			mappings.RegisterMapping(typeof(RibbonTabItem), Container.Resolve<TabItemRegionAdapter>());
 			return mappings;
 		}
 	}

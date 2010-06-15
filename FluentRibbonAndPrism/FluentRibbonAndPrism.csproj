@@ -84,6 +84,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Infrastructure\TabItemRegionAdapter.cs" />
     <Compile Include="NewRibbonTab.xaml.cs">
       <DependentUpon>NewRibbonTab.xaml</DependentUpon>
     </Compile>
