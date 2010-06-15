@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Presentation.Commands;
 using Microsoft.Practices.Composite.Regions;
 
@@ -8,16 +9,24 @@ namespace FluentRibbonAndPrism
 	public class MainWindowViewModel
 	{
 		private readonly IRegionManager regionManager;
+		private readonly IModuleManager moduleManager;
 		private IRegion ribbonRegion;
 
-		public MainWindowViewModel(IRegionManager regionManager)
+		public MainWindowViewModel(IRegionManager regionManager, IModuleManager moduleManager) 
 		{
 			this.regionManager = regionManager;
+			this.moduleManager = moduleManager;
 
 			CreateNewTabCommand = new DelegateCommand<object>(CreateNewTab);
 			CreateAndActivateNewTabCommand = new DelegateCommand<object>(CreateAndActivateNewTab);
 			RemoveActiveTabCommand = new DelegateCommand<object>(RemoveActiveTab, CanRemoveActiveTab);
 			DeactivateActiveTabCommand = new DelegateCommand<object>(DeactivateActiveTab, CanDeactivateActiveTab);
+			LoadModuleAndShowTabCommand = new DelegateCommand<object>(LoadModule);
+		}
+
+		private void LoadModule(object obj)
+		{
+			moduleManager.LoadModule("ModuleInjectingTabItem");
 		}
 
 		private void DeactivateActiveTab(object obj)
@@ -73,6 +82,7 @@ namespace FluentRibbonAndPrism
 		public DelegateCommand<object> CreateAndActivateNewTabCommand { get; set; }
 		public DelegateCommand<object> RemoveActiveTabCommand { get; set; }
 		public DelegateCommand<object> DeactivateActiveTabCommand { get; set; }
+		public DelegateCommand<object> LoadModuleAndShowTabCommand { get; set; }
 
 		public void AfterShellCreated()
 		{

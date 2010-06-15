@@ -27,6 +27,7 @@
 			<Button Command="{Binding RemoveActiveTabCommand}" Content="Remove Active Tab" Height="32" HorizontalAlignment="Left" Margin="18,70,0,0" VerticalAlignment="Top" Width="147" />
 			<Button Command="{Binding DeactivateActiveTabCommand}" Content="Deactivate Active Tab" Height="32" HorizontalAlignment="Left" Margin="183,70,0,0" VerticalAlignment="Top" Width="147" />
 			<Button Command="{Binding CreateAndActivateNewTabCommand}" Content="Add New Tab and Activate" Height="32" HorizontalAlignment="Left" Margin="183,18,0,0" VerticalAlignment="Top" Width="147" />
+			<Button Command="{Binding LoadModuleAndShowTabCommand}" Content="Load Module and Show Tab from Module" Height="32" HorizontalAlignment="Left" Margin="18,191,0,0" VerticalAlignment="Top" Width="312" />
 		</Grid>
 	</Grid>
 </Fluent:RibbonWindow>

@@ -28,7 +28,7 @@ namespace FluentRibbonAndPrism
 
 		protected override IModuleCatalog GetModuleCatalog()
 		{
-			return new ModuleCatalog();
+			return new DirectoryModuleCatalog {ModulePath = @"."};
 		}
 
 		protected override void BeforeShellCreated()
