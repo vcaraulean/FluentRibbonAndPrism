@@ -43,9 +43,6 @@
     <Reference Include="Castle.Facilities.Logging">
       <HintPath>..\Library\Castle.Facilities.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.MicroKernel">
-      <HintPath>..\Library\Castle.MicroKernel.dll</HintPath>
-    </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>..\Library\Castle.Windsor.dll</HintPath>
     </Reference>
