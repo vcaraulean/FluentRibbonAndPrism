@@ -1,4 +1,5 @@
 using System.Windows;
+using Castle.MicroKernel.Registration;
 using Fluent;
 using FluentRibbonAndPrism.Infrastructure;
 using Microsoft.Practices.Composite.Modularity;
@@ -35,14 +36,14 @@ namespace FluentRibbonAndPrism
 		{
 			base.BeforeShellCreated();
 
-			Container.AddComponent<MainWindowViewModel>();
+			Container.Register(Component.For<MainWindowViewModel>());
 		}
 
 		protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
 		{
 			var mappings = base.ConfigureRegionAdapterMappings();
-			Container.AddComponent<RibbonRegionAdapter>();
-			Container.AddComponent<TabItemRegionAdapter>();
+			Container.Register(Component.For<RibbonRegionAdapter>());
+			Container.Register(Component.For<TabItemRegionAdapter>());
 
 			mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
 			mappings.RegisterMapping(typeof(RibbonTabItem), Container.Resolve<TabItemRegionAdapter>());

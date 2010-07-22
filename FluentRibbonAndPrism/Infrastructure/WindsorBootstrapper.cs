@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Castle.Core;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using log4net;
 using Microsoft.Practices.Composite.Logging;
@@ -20,7 +20,7 @@ namespace FluentRibbonAndPrism.Infrastructure
 	/// </summary>
 	public abstract class WindsorBootstrapper
 	{
-		private readonly ILog logger = LogManager.GetLogger(typeof(WindsorBootstrapper));
+		private readonly ILog logger = LogManager.GetLogger(typeof (WindsorBootstrapper));
 
 		public IWindsorContainer Container { get; private set; }
 
@@ -70,11 +70,17 @@ namespace FluentRibbonAndPrism.Infrastructure
 			AfterShellCreated();
 		}
 
-		protected virtual void AfterContainerConfigured() { }
+		protected virtual void AfterContainerConfigured()
+		{
+		}
 
-		protected virtual void BeforeShellCreated() { }
+		protected virtual void BeforeShellCreated()
+		{
+		}
 
-		protected virtual void AfterShellCreated() { }
+		protected virtual void AfterShellCreated()
+		{
+		}
 
 		/// <summary>
 		/// Configures the <see cref="IWindsorContainer"/>. May be overwritten in a derived class to add specific
@@ -82,30 +88,33 @@ namespace FluentRibbonAndPrism.Infrastructure
 		/// </summary>
 		protected virtual void ConfigureContainer()
 		{
-			Container.AddComponent<ILoggerFacade, Log4NetLogger>();
-			Container.Kernel.AddComponentInstance(typeof(IWindsorContainer).FullName, typeof(IWindsorContainer), Container);
+			Container.Register(
+				Component.For<ILoggerFacade>().ImplementedBy<Log4NetLogger>(),
+				Component.For<IWindsorContainer>().Named(typeof (IWindsorContainer).FullName).Instance(Container)
+				);
 
 			IModuleCatalog moduleCatalog = GetModuleCatalog();
 			if (moduleCatalog != null)
 			{
-				Container.Kernel.AddComponentInstance(typeof(IModuleCatalog).FullName, typeof(IModuleCatalog), moduleCatalog);
+				Container.Register(Component.For<IModuleCatalog>().Named(typeof (IModuleCatalog).FullName).Instance(moduleCatalog));
 
 				// All modules are registered in Container.
 				foreach (var moduleInfo in moduleCatalog.Modules)
 				{
-					Container.AddComponent(moduleInfo.ModuleName, Type.GetType(moduleInfo.ModuleType));
+					Container.Register(Component.For(Type.GetType(moduleInfo.ModuleType)).Named(moduleInfo.ModuleName));
 				}
 			}
 
-			Container.AddComponent<IServiceLocator, WindsorServiceLocator>();
-			Container.AddComponent<IModuleInitializer, ModuleInitializer>();
-			Container.AddComponent<IModuleManager, ModuleManager>();
-			Container.AddComponent<RegionAdapterMappings, RegionAdapterMappings>();
-			Container.AddComponent<IRegionManager, RegionManager>();
-			Container.AddComponent<IRegionViewRegistry, RegionViewRegistry>();
-			Container.AddComponent<IRegionBehaviorFactory, RegionBehaviorFactory>();
-
-			Container.AddComponentLifeStyle<DelayedRegionCreationBehavior>(LifestyleType.Transient);
+			Container.Register(
+				Component.For<IServiceLocator>().ImplementedBy<WindsorServiceLocator>(), 
+				Component.For<IModuleInitializer>().ImplementedBy<ModuleInitializer>(), 
+				Component.For<IModuleManager>().ImplementedBy<ModuleManager>(), 
+				Component.For<RegionAdapterMappings>(), 
+				Component.For<IRegionManager>().ImplementedBy<RegionManager>(), 
+				Component.For<IRegionViewRegistry>().ImplementedBy<RegionViewRegistry>(), 
+				Component.For<IRegionBehaviorFactory>().ImplementedBy<RegionBehaviorFactory>(), 
+				Component.For<DelayedRegionCreationBehavior>().LifeStyle.Transient 
+				);
 
 			ServiceLocator.SetLocatorProvider(() => Container.Resolve<IServiceLocator>());
 		}
@@ -121,10 +130,12 @@ namespace FluentRibbonAndPrism.Infrastructure
 			var regionAdapterMappings = Container.Resolve<RegionAdapterMappings>();
 			if (regionAdapterMappings != null)
 			{
-				Container.AddComponent<SelectorRegionAdapter>();
-				Container.AddComponent<ItemsControlRegionAdapter>();
-				regionAdapterMappings.RegisterMapping(typeof(Selector), Container.Resolve<SelectorRegionAdapter>());
-				regionAdapterMappings.RegisterMapping(typeof(ItemsControl), Container.Resolve<ItemsControlRegionAdapter>());
+				Container.Register(
+					Component.For<SelectorRegionAdapter>(), 
+					Component.For<ItemsControlRegionAdapter>() 
+					);
+				regionAdapterMappings.RegisterMapping(typeof (Selector), Container.Resolve<SelectorRegionAdapter>());
+				regionAdapterMappings.RegisterMapping(typeof (ItemsControl), Container.Resolve<ItemsControlRegionAdapter>());
 			}
 
 			return regionAdapterMappings;
@@ -140,7 +151,8 @@ namespace FluentRibbonAndPrism.Infrastructure
 			var moduleManager = Container.Resolve<IModuleManager>();
 			if (moduleManager == null)
 			{
-				throw new InvalidOperationException("The IModuleLoader is required and cannot be null in order to initialize the modules.");
+				throw new InvalidOperationException(
+					"The IModuleLoader is required and cannot be null in order to initialize the modules.");
 			}
 			moduleManager.Run();
 		}
@@ -153,19 +165,19 @@ namespace FluentRibbonAndPrism.Infrastructure
 		{
 			var defaultRegionBehaviors = Container.Resolve<IRegionBehaviorFactory>();
 			defaultRegionBehaviors.AddIfMissing(AutoPopulateRegionBehavior.BehaviorKey,
-															  typeof(AutoPopulateRegionBehavior));
+			                                    typeof (AutoPopulateRegionBehavior));
 
 			defaultRegionBehaviors.AddIfMissing(BindRegionContextToDependencyObjectBehavior.BehaviorKey,
-															  typeof(BindRegionContextToDependencyObjectBehavior));
+			                                    typeof (BindRegionContextToDependencyObjectBehavior));
 
 			defaultRegionBehaviors.AddIfMissing(RegionActiveAwareBehavior.BehaviorKey,
-															  typeof(RegionActiveAwareBehavior));
+			                                    typeof (RegionActiveAwareBehavior));
 
 			defaultRegionBehaviors.AddIfMissing(SyncRegionContextWithHostBehavior.BehaviorKey,
-															  typeof(SyncRegionContextWithHostBehavior));
+			                                    typeof (SyncRegionContextWithHostBehavior));
 
 			defaultRegionBehaviors.AddIfMissing(RegionManagerRegistrationBehavior.BehaviorKey,
-															  typeof(RegionManagerRegistrationBehavior));
+			                                    typeof (RegionManagerRegistrationBehavior));
 
 			return;
 		}

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Castle.Core;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Microsoft.Practices.ServiceLocation;
@@ -25,7 +24,7 @@ namespace FluentRibbonAndPrism.Infrastructure
 			if (key != null)
 			{
 				if (!container.Kernel.HasComponent(key))
-					container.AddComponentLifeStyle(key, serviceType, LifestyleType.Transient);
+					container.Register(Component.For(serviceType).Named(key).LifeStyle.Transient);
 
 				return container.Resolve(key, serviceType);
 			}
